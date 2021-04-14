@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 4812096974127619282
+  m_GuidHigh: 10380001616591527100
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5691328860291557779
+      m_GuidHigh: 10843587627035797666
+    m_SerializedTextureGuid:
+      m_GuidLow: 10868470654910629242
+      m_GuidHigh: 13762341974706450729
+    m_Size: {x: 0.1, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: earth
+    m_Texture: {fileID: 2800000, guid: 1db4857a907a96d42971d3271ca9fdbe, type: 3}
