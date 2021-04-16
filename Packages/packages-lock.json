@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.google.ar.core.arfoundation.extensions": {
-      "version": "file:C:/Users/Korisnik/Downloads/arcore-unity-extensions-1.23.0.tgz",
+      "version": "file:C:/Projects/Unity Projects/SamoborNT-AR/Packages/arcore-unity-extensions-1.23.0.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
@@ -46,6 +46,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.multiplayer-hlapi": {
+      "version": "1.0.8",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "nuget.mono-cecil": "0.1.6-preview"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.subsystemregistration": {
@@ -99,11 +108,11 @@
       }
     },
     "com.unity.xr.arcore": {
-      "version": "4.1.5",
+      "version": "4.1.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.xr.arsubsystems": "4.1.5",
+        "com.unity.xr.arsubsystems": "4.1.7",
         "com.unity.xr.management": "4.0.1",
         "com.unity.modules.androidjni": "1.0.0"
       },
@@ -120,7 +129,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.arsubsystems": {
-      "version": "4.1.5",
+      "version": "4.1.7",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -149,6 +158,13 @@
         "com.unity.xr.legacyinputhelpers": "2.1.7",
         "com.unity.subsystemregistration": "1.0.6"
       },
+      "url": "https://packages.unity.com"
+    },
+    "nuget.mono-cecil": {
+      "version": "0.1.6-preview",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.modules.ai": {

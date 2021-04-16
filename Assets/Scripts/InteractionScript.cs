@@ -16,10 +16,17 @@ public class InteractionScript : MonoBehaviour
 
     void Start()
     {
-        UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        currentActivitty = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-        intent = currentActivitty.Call<AndroidJavaObject>("getIntent");
-        hasExtra = intent.Call<bool>("hasExtra", "arguments");
+        try
+        {
+            UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            currentActivitty = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+            intent = currentActivitty.Call<AndroidJavaObject>("getIntent");
+            hasExtra = intent.Call<bool>("hasExtra", "arguments");
+        }
+        catch
+        {
+            hasExtra = false;
+        }
     }
     private void Update()
     {
