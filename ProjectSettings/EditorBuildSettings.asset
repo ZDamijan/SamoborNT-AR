@@ -6,11 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/LauncherScreen/LauncherScreen.unity
+    guid: 39a8074389f840c45895b7d8da4ae5fd
+  - enabled: 1
     path: Assets/Scenes/ImageTracer/ImageTracer.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/LightEstimation/BasicLightEstimation.unity
+    path: Assets/Scenes/BasicRotation/BasicRotation.unity
     guid: 2f0cbc82480584c258f99f0d9e4ba302
+  - enabled: 1
+    path: Assets/Samples/ARCore Extensions/1.23.0/Persistent Cloud Anchor Sample/Scenes/PersistentCloudAnchors.unity
+    guid: a1cbde3cab63248f4bbf8d8ad6586754
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 0928976cc7fc037458f5311f190c70d9, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9888153291b844f4eab0d37ab70c02c4, type: 2}
