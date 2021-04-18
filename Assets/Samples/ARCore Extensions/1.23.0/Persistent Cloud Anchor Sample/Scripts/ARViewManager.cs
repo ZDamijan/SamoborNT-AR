@@ -381,7 +381,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
                     hitPose.rotation.eulerAngles =
                             new Vector3(0.0f, Controller.MainCamera.transform.eulerAngles.y, 0.0f);
                 }
-#pragma warning disable 0618
+#pragma warning disable 0618 
                 _anchor = Controller.AnchorManager.AddAnchor(hitPose);
 #pragma warning restore 0618
             }
