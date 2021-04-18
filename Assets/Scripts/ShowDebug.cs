@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ShowDebug : MonoBehaviour
 {
     //#if !UNITY_EDITOR
-    private string output;
+    private static string output;
     private string stack;
     public Text txtDebug;
 

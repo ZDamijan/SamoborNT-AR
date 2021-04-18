@@ -15,7 +15,6 @@ public class InteractionScript : MonoBehaviour
     private AndroidJavaObject currentActivitty;
     private string sceneName;
     [SerializeField] private ARSession arSession;
-    public static ARSession activeArSession;
 
     void Start()
     {
@@ -39,11 +38,7 @@ public class InteractionScript : MonoBehaviour
                 Debug.Log("activeArSession Reset");
             }
         }*/
-        if (activeArSession != null)
-        {
-            activeArSession = arSession;
-            Debug.Log("activeArSession set");
-        }
+        arSession.Reset();
         hasExtra = false;
         Debug.Log("Scene started: " + SceneManager.GetActiveScene().name);
         try
@@ -68,10 +63,14 @@ public class InteractionScript : MonoBehaviour
             intent.Call("removeExtra", "sceneName");
             if (SceneManager.GetActiveScene().name != sceneName)
             {
-                if (arSession != null)
-                    Destroy(activeArSession);
+                Destroy(arSession);
                 Debug.Log("LoadScene: " + sceneName);
-                SceneManager.LoadScene(sceneName);
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+                while (!asyncLoad.isDone)
+                {
+                    SceneManager.UnloadSceneAsync(sceneName);
+                    return;
+                }
             }
             hasExtra = false;
         }
@@ -80,10 +79,8 @@ public class InteractionScript : MonoBehaviour
             if (Input.GetKey(KeyCode.Escape))
             {
                 Debug.Log("Quit");
-                //ARSession session = goARCoreDevice.GetComponent<ARCoreSession>();
-                //ARSession.Reset();
-                if (arSession != null)
-                    Destroy(activeArSession);
+                Destroy(arSession);
+                Application.Unload();
                 Application.Quit();
                 //currentActivitty.Call<bool>("moveTaskToBack", true);
                 //code for calling Android function
