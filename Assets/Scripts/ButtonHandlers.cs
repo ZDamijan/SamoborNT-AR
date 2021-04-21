@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Management;
 using UnityEngine.XR.ARFoundation;
@@ -27,7 +28,23 @@ public class ButtonHandlers : MonoBehaviour
 	public void TakeScreenshot()
     {
         Debug.Log("TakeScreenshot");
-        StartCoroutine(CaptureScreen());
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
+			{
+				Permission.RequestUserPermission(Permission.ExternalStorageWrite);
+				if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite)) return;
+				else StartCoroutine(CaptureScreen());
+			}
+			else
+			{
+				StartCoroutine(CaptureScreen());
+			}
+		}
+		else
+		{
+			StartCoroutine(CaptureScreen());
+		}
     }
 
 	public IEnumerator CaptureScreen()
@@ -38,41 +55,48 @@ public class ButtonHandlers : MonoBehaviour
 		yield return new WaitForEndOfFrame(); // Wait for screen rendering to complete
 		if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
 		{
-			mainCamera = Camera.main.GetComponent<Camera>(); // for Taking Picture
 			renderTex = new RenderTexture(width, height, 24);
-			mainCamera.targetTexture = renderTex;
-			RenderTexture.active = renderTex;
-			mainCamera.Render();
 			screenshot = new Texture2D(width, height, TextureFormat.RGB24, false);
 			screenshot.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-			screenshot.Apply(); //false
-			RenderTexture.active = null;
-			mainCamera.targetTexture = null;
 		}
-		if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
+		else if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
 		{
-			mainCamera = Camera.main.GetComponent<Camera>(); // for Taking Picture
 			renderTex = new RenderTexture(height, width, 24);
-			mainCamera.targetTexture = renderTex;
-			RenderTexture.active = renderTex;
-			mainCamera.Render();
 			screenshot = new Texture2D(height, width, TextureFormat.RGB24, false);
 			screenshot.ReadPixels(new Rect(0, 0, height, width), 0, 0);
-			screenshot.Apply(); //false
-			RenderTexture.active = null;
-			mainCamera.targetTexture = null;
+		}
+		mainCamera = Camera.main.GetComponent<Camera>(); // for Taking Picture
+		mainCamera.targetTexture = renderTex;
+		RenderTexture.active = renderTex;
+		mainCamera.Render();
+		screenshot.Apply(); //false
+		RenderTexture.active = null;
+		mainCamera.targetTexture = null;
+
+		string screenShotName = "SamoborNT-AR-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".png";
+		string folderPath, path;
+
+		if (Application.platform == RuntimePlatform.Android)
+		{
+			var javaClass = new AndroidJavaClass("android.os.Environment");
+			folderPath = javaClass.CallStatic<AndroidJavaObject>("getExternalStoragePublicDirectory", 
+						 javaClass.GetStatic<string>("DIRECTORY_DCIM")).Call<string>("getAbsolutePath");
+			folderPath += "/" + "Screenshots";
+		}
+		else
+		{
+			// on Win7 - C:/Users/Username/AppData/LocalLow/CompanyName/GameName
+			folderPath = Application.persistentDataPath + "/" + "screenshots";
 		}
 
-		string folderPath = Application.persistentDataPath + "/" + "screenshots";
 		if (!System.IO.Directory.Exists(folderPath))
+		{
 			System.IO.Directory.CreateDirectory(folderPath);
-		string screenShotName = "SamoborNT-AR-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".png";
-		string path = folderPath + "/" + screenShotName;
+		}
 
-		// on Win7 - C:/Users/Username/AppData/LocalLow/CompanyName/GameName
-		// on Android - /Data/Data/com.companyname.gamename/Files
+		path = folderPath + "/" + screenShotName;
 		File.WriteAllBytes(path, screenshot.EncodeToPNG());
-
+		
 		// on Win7 - it's in project files (Asset folder)
 		//File.WriteAllBytes (Application.dataPath + "/" + screenShotName, screenshot.EncodeToPNG ());  
 		//File.WriteAllBytes ("picture1.png", screenshot.EncodeToPNG ());
