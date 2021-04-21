@@ -4,6 +4,8 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Management;
+using UnityEngine.XR.ARFoundation;
 
 public class ButtonHandlers : MonoBehaviour
 {
@@ -16,9 +18,13 @@ public class ButtonHandlers : MonoBehaviour
 
 	public void LaunchScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
-    }    
-    public void TakeScreenshot()
+		Debug.Log("LoadScene: " + sceneName);
+		var xrManagerSettings = UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager;
+		xrManagerSettings.DeinitializeLoader();
+		SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+		xrManagerSettings.InitializeLoaderSync();
+	}
+	public void TakeScreenshot()
     {
         Debug.Log("TakeScreenshot");
         StartCoroutine(CaptureScreen());

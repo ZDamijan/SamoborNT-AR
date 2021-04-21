@@ -38,7 +38,6 @@ public class InteractionScript : MonoBehaviour
                 Debug.Log("activeArSession Reset");
             }
         }*/
-        arSession.Reset();
         hasExtra = false;
         Debug.Log("Scene started: " + SceneManager.GetActiveScene().name);
         try
@@ -63,12 +62,11 @@ public class InteractionScript : MonoBehaviour
             intent.Call("removeExtra", "sceneName");
             if (SceneManager.GetActiveScene().name != sceneName)
             {
-                Destroy(arSession);
                 Debug.Log("LoadScene: " + sceneName);
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
                 while (!asyncLoad.isDone)
                 {
-                    SceneManager.UnloadSceneAsync(sceneName);
+                    SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
                     return;
                 }
             }
@@ -78,10 +76,12 @@ public class InteractionScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape))
             {
-                Debug.Log("Quit");
-                Destroy(arSession);
-                Application.Unload();
-                Application.Quit();
+                Debug.Log("Return");
+                var xrManagerSettings = UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager;
+                xrManagerSettings.DeinitializeLoader();
+                SceneManager.LoadScene("LauncherScreen", LoadSceneMode.Single);
+                xrManagerSettings.InitializeLoaderSync();
+                //Application.Quit();
                 //currentActivitty.Call<bool>("moveTaskToBack", true);
                 //code for calling Android function
                 //AndroidJavaClass UnityHolderActivity = new AndroidJavaClass("com.strukovnasamobor.samobornt.UnityHolderActivity");
