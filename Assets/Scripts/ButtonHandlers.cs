@@ -24,6 +24,7 @@ public class ButtonHandlers : MonoBehaviour
 	public void TakeScreenshot()
     {
 		Debug.Log("TakeScreenshot()");
+
 		if (Application.platform == RuntimePlatform.Android)
 		{
 			if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))

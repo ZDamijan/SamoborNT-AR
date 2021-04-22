@@ -257,7 +257,6 @@ GameObject:
   m_Component:
   - component: {fileID: 727048115}
   - component: {fileID: 727048111}
-  - component: {fileID: 727048114}
   - component: {fileID: 727048113}
   - component: {fileID: 727048112}
   m_Layer: 0
@@ -339,26 +338,8 @@ MonoBehaviour:
   m_FocusMode: -1
   m_LightEstimationMode: -1
   m_AutoFocus: 1
-  m_LightEstimation: 28
-  m_FacingDirection: 1
---- !u!114 &727048114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 727048110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a2a9c34df4095f47b9ca8f975175f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Device: 0
-  m_PoseSource: 2
-  m_PoseProviderComponent: {fileID: 0}
-  m_TrackingType: 0
-  m_UpdateType: 0
-  m_UseRelativeTransform: 0
+  m_LightEstimation: 0
+  m_FacingDirection: 2
 --- !u!4 &727048115
 Transform:
   m_ObjectHideFlags: 0
