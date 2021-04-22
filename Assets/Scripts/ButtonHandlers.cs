@@ -52,50 +52,15 @@ public class ButtonHandlers : MonoBehaviour
 
 		GameObject.Find("AppInfoCanvas").GetComponent<Canvas>().enabled = false;
 		yield return new WaitForEndOfFrame(); // Wait for screen rendering to complete
-		if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
-		{
-			mainCamera = Camera.main.GetComponent<Camera>(); // for Taking Picture
-			renderTex = new RenderTexture(width, height, 24);
-			mainCamera.targetTexture = renderTex;
-			RenderTexture.active = renderTex;
-			mainCamera.Render();
-			screenshot = new Texture2D(width, height, TextureFormat.RGB24, false);
-			screenshot.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-			screenshot.Apply(); //false
-			RenderTexture.active = null;
-			mainCamera.targetTexture = null;
-		}
-		if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
-		{
-			mainCamera = Camera.main.GetComponent<Camera>(); // for Taking Picture
-			renderTex = new RenderTexture(height, width, 24);
-			mainCamera.targetTexture = renderTex;
-			RenderTexture.active = renderTex;
-			mainCamera.Render();
-			screenshot = new Texture2D(height, width, TextureFormat.RGB24, false);
-			screenshot.ReadPixels(new Rect(0, 0, height, width), 0, 0);
-			screenshot.Apply(); //false
-			RenderTexture.active = null;
-			mainCamera.targetTexture = null;
-		}
+		Texture2D tex = new Texture2D(width, height);
+		tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+		tex.Apply();
 
-		string folderPath = Application.persistentDataPath + "/" + "screenshots";
-		if (!System.IO.Directory.Exists(folderPath))
-			System.IO.Directory.CreateDirectory(folderPath);
+		yield return tex;
 		string screenShotName = "SamoborNT-AR-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".png";
-		string path = folderPath + "/" + screenShotName;
-
-		// on Win7 - C:/Users/Username/AppData/LocalLow/CompanyName/GameName
-		// on Android - /Data/Data/com.companyname.gamename/Files
-		File.WriteAllBytes(path, screenshot.EncodeToPNG());
-
-		// on Win7 - it's in project files (Asset folder)
-		//File.WriteAllBytes (Application.dataPath + "/" + screenShotName, screenshot.EncodeToPNG ());  
-		//File.WriteAllBytes ("picture1.png", screenshot.EncodeToPNG ());
-		//File.WriteAllBytes (Application.dataPath + "/../../picture3.png", screenshot.EncodeToPNG ());
-		//Application.CaptureScreenshot ("picture2.png");
+		string path = SaveImageToGallery(tex, screenShotName, "Samobor N&T AR Screenshot");
+		Debug.Log("Picture has been saved at:\n" + path);
 		GameObject.Find("AppInfoCanvas").GetComponent<Canvas>().enabled = true; // Show UI after we're done
-		Debug.Log("Screenshot dest: " + path);
 
 		string[] paths = new string[1];
 		paths[0] = path;
@@ -110,6 +75,43 @@ public class ButtonHandlers : MonoBehaviour
 			{
 				Conn.CallStatic("scanFile", playerActivity, paths, null, null);
 			}
+		}
+	}
+
+	protected const string MEDIA_STORE_IMAGE_MEDIA = "android.provider.MediaStore$Images$Media";
+	protected static AndroidJavaObject m_Activity;
+
+	protected static string SaveImageToGallery(Texture2D a_Texture, string a_Title, string a_Description)
+	{
+		using (AndroidJavaClass mediaClass = new AndroidJavaClass(MEDIA_STORE_IMAGE_MEDIA))
+		{
+			using (AndroidJavaObject contentResolver = Activity.Call<AndroidJavaObject>("getContentResolver"))
+			{
+				AndroidJavaObject image = Texture2DToAndroidBitmap(a_Texture);
+				return mediaClass.CallStatic<string>("insertImage", contentResolver, image, a_Title, a_Description);
+			}
+		}
+	}
+
+	protected static AndroidJavaObject Texture2DToAndroidBitmap(Texture2D a_Texture)
+	{
+		byte[] encodedTexture = a_Texture.EncodeToPNG();
+		using (AndroidJavaClass bitmapFactory = new AndroidJavaClass("android.graphics.BitmapFactory"))
+		{
+			return bitmapFactory.CallStatic<AndroidJavaObject>("decodeByteArray", encodedTexture, 0, encodedTexture.Length);
+		}
+	}
+
+	protected static AndroidJavaObject Activity
+	{
+		get
+		{
+			if (m_Activity == null)
+			{
+				AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+				m_Activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+			}
+			return m_Activity;
 		}
 	}
 }
