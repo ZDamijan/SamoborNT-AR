@@ -57,8 +57,8 @@ public class ButtonHandlers : MonoBehaviour
 		tex.Apply();
 
 		yield return tex;
-		string screenShotName = "SamoborNT-AR-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".png";
-		string path = SaveImageToGallery(tex, screenShotName, "Samobor N&T AR Screenshot");
+		string screenShotName = "SamoborNT-AR-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+		string path = SaveImageToGallery(tex, screenShotName, "Samobor N&T AR Picture");
 		Debug.Log("Picture has been saved at:\n" + path);
 		GameObject.Find("AppInfoCanvas").GetComponent<Canvas>().enabled = true; // Show UI after we're done
 
@@ -95,10 +95,13 @@ public class ButtonHandlers : MonoBehaviour
 
 	protected static AndroidJavaObject Texture2DToAndroidBitmap(Texture2D a_Texture)
 	{
-		byte[] encodedTexture = a_Texture.EncodeToPNG();
+		byte[] encodedTexture = a_Texture.EncodeToJPG();
+		sbyte[] signedEncodedTexture = new sbyte[encodedTexture.Length];
+        System.Buffer.BlockCopy(encodedTexture, 0, signedEncodedTexture, 0, encodedTexture.Length);
+
 		using (AndroidJavaClass bitmapFactory = new AndroidJavaClass("android.graphics.BitmapFactory"))
 		{
-			return bitmapFactory.CallStatic<AndroidJavaObject>("decodeByteArray", encodedTexture, 0, encodedTexture.Length);
+			return bitmapFactory.CallStatic<AndroidJavaObject>("decodeByteArray", signedEncodedTexture, 0, encodedTexture.Length);
 		}
 	}
 
