@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using UnityEngine.XR.Management;
 using UnityEngine.XR.ARFoundation;
 
@@ -63,12 +60,10 @@ public class InteractionScript : MonoBehaviour
             if (SceneManager.GetActiveScene().name != sceneName)
             {
                 Debug.Log("LoadScene: " + sceneName);
-                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-                while (!asyncLoad.isDone)
-                {
-                    SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
-                    return;
-                }
+                var xrManagerSettings = XRGeneralSettings.Instance.Manager;
+                xrManagerSettings.DeinitializeLoader();
+                SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+                xrManagerSettings.InitializeLoaderSync();
             }
             hasExtra = false;
         }
@@ -76,12 +71,17 @@ public class InteractionScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape))
             {
-                Debug.Log("Return");
-                var xrManagerSettings = UnityEngine.XR.Management.XRGeneralSettings.Instance.Manager;
-                xrManagerSettings.DeinitializeLoader();
-                SceneManager.LoadScene("LauncherScreen", LoadSceneMode.Single);
-                xrManagerSettings.InitializeLoaderSync();
-                //Application.Quit();
+                if (SceneManager.GetActiveScene().name == "LauncherScreen")
+                    Application.Unload();
+                else
+                {
+                    Debug.Log("Return");
+                    var xrManagerSettings = XRGeneralSettings.Instance.Manager;
+                    xrManagerSettings.DeinitializeLoader();
+                    SceneManager.LoadScene("LauncherScreen", LoadSceneMode.Single);
+                    xrManagerSettings.InitializeLoaderSync();
+                }
+                    
                 //currentActivitty.Call<bool>("moveTaskToBack", true);
                 //code for calling Android function
                 //AndroidJavaClass UnityHolderActivity = new AndroidJavaClass("com.strukovnasamobor.samobornt.UnityHolderActivity");
