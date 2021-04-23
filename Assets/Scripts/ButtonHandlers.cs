@@ -21,9 +21,9 @@ public class ButtonHandlers : MonoBehaviour
 		SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
 		xrManagerSettings.InitializeLoaderSync();
 	}
-	public void TakeScreenshot()
+	public void TakePicture()
     {
-		Debug.Log("TakeScreenshot()");
+		Debug.Log("TakePicture()");
 
 		if (Application.platform == RuntimePlatform.Android)
 		{
@@ -60,7 +60,7 @@ public class ButtonHandlers : MonoBehaviour
 		yield return tex;
 		string screenShotName = "SamoborNT-AR-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
 		string path = SaveImageToGallery(tex, screenShotName, "Samobor N&T AR Picture");
-		Debug.Log("Picture has been saved at:\n" + path);
+		Debug.Log("Picture saved at:\n" + path);
 		GameObject.Find("AppInfoCanvas").GetComponent<Canvas>().enabled = true; // Show UI after we're done
 
 		string[] paths = new string[1];
