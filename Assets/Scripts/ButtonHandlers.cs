@@ -1,5 +1,4 @@
 using System.Collections;
-using System.IO;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
@@ -7,9 +6,6 @@ using UnityEngine.XR.Management;
 
 public class ButtonHandlers : MonoBehaviour
 {
-	Camera mainCamera;
-	RenderTexture renderTex;
-	Texture2D screenshot;
 	int width = Screen.width;   // for Taking Picture
 	int height = Screen.height; // for Taking Picture
 
@@ -52,6 +48,7 @@ public class ButtonHandlers : MonoBehaviour
 		yield return null; // Wait till the last possible moment before screen rendering to hide the UI
 
 		GameObject.Find("AppInfoCanvas").GetComponent<Canvas>().enabled = false;
+		GameObject.Find("AppInfoCanvas").GetComponent<AudioSource>().Play(0);
 		yield return new WaitForEndOfFrame(); // Wait for screen rendering to complete
 		Texture2D tex = new Texture2D(width, height);
 		tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
