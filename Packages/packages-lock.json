@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.google.ar.core.arfoundation.extensions": {
-      "version": "file:C:/Projects/Unity Projects/SamoborNT-AR/Packages/arcore-unity-extensions-1.23.0.tgz",
+      "version": "file:arcore-unity-extensions-1.23.0.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
