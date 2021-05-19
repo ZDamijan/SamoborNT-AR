@@ -15,28 +15,13 @@ public class InteractionScript : MonoBehaviour
 
     void Start()
     {
-        /*
-        Debug.Log("Start");
-        if (activeArSession == null)
-        {
-            if (arSession != null)
-            {
-                activeArSession = arSession;
-                Debug.Log("activeArSession set");
-            }
-        }
+        Debug.Log("Scene started: " + SceneManager.GetActiveScene().name);
         if (arSession != null)
         {
             arSession.Reset();
             Debug.Log("arSession Reset");
-            if (activeArSession != arSession)
-            {
-                activeArSession.Reset();
-                Debug.Log("activeArSession Reset");
-            }
-        }*/
+        }
         hasExtra = false;
-        Debug.Log("Scene started: " + SceneManager.GetActiveScene().name);
         try
         {
             UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -71,6 +56,10 @@ public class InteractionScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape))
             {
+                var xrManagerSettings = XRGeneralSettings.Instance.Manager;
+                xrManagerSettings.DeinitializeLoader();
+                Application.Unload();
+                /*
                 if (SceneManager.GetActiveScene().name == "LauncherScreen")
                     Application.Unload();
                 else
@@ -81,7 +70,8 @@ public class InteractionScript : MonoBehaviour
                     SceneManager.LoadScene("LauncherScreen", LoadSceneMode.Single);
                     xrManagerSettings.InitializeLoaderSync();
                 }
-                    
+                */
+
                 //currentActivitty.Call<bool>("moveTaskToBack", true);
                 //code for calling Android function
                 //AndroidJavaClass UnityHolderActivity = new AndroidJavaClass("com.strukovnasamobor.samobornt.UnityHolderActivity");
