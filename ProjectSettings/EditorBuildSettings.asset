@@ -29,9 +29,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/CloudAnchors/CloudAnchors.unity
     guid: 3e8923ba56eeba54cb1c19bd6c03a467
-  - enabled: 0
-    path: Assets/Samples/ARCore Extensions/1.23.0/Persistent Cloud Anchor Sample/Scenes/PersistentCloudAnchors.unity
-    guid: a1cbde3cab63248f4bbf8d8ad6586754
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 0928976cc7fc037458f5311f190c70d9, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9888153291b844f4eab0d37ab70c02c4, type: 2}
