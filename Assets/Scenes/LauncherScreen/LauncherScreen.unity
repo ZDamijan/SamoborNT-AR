@@ -1076,7 +1076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3441287687906804820, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3527778348983693430, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_RootOrder
@@ -1088,7 +1088,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3761377323718101501, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3761377323718101503, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_Text
@@ -1096,11 +1096,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3761377324195292107, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3761377324255432388, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3761377324317550754, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_Pivot.x
@@ -1208,7 +1208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4990983427777507012, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5144100376222153690, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1233,6 +1233,10 @@ PrefabInstance:
     - target: {fileID: 6817763011806115314, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
       propertyPath: m_RootOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8948843915288771350, guid: 3ab5346933186e449a1b966787c9a729, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ab5346933186e449a1b966787c9a729, type: 3}

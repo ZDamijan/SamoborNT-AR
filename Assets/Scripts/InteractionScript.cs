@@ -54,11 +54,12 @@ public class InteractionScript : MonoBehaviour
         }
         if (Application.platform == RuntimePlatform.Android)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 var xrManagerSettings = XRGeneralSettings.Instance.Manager;
                 xrManagerSettings.DeinitializeLoader();
                 Application.Unload();
+                
                 /*
                 if (SceneManager.GetActiveScene().name == "LauncherScreen")
                     Application.Unload();
